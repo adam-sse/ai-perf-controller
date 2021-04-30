@@ -1,0 +1,19 @@
+{
+    "logLevel": "FINEST",
+    "workerIp": "127.0.0.1",
+    
+    "parameters": [
+        {
+            "name": "param1",
+            "type": "int",
+            "default": 0,
+            "min": 0,
+            "max": 10
+        },
+        {
+            "name": "otherParam",
+            "type": "bool",
+            "default": false
+        }
+    ]
+}
