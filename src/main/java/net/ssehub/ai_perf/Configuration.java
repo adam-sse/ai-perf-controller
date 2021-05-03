@@ -34,6 +34,11 @@ public class Configuration {
     private String workerIp;
     
     @Required
+    private String strategy;
+    
+    private long interactionThreshold;
+    
+    @Required
     private List<Parameter<?>> parameters;
     
     private Configuration() {}
@@ -140,6 +145,13 @@ public class Configuration {
         return workerIp;
     }
     
+    public String getStrategy() {
+        return strategy;
+    }
+    
+    public long getInteractionThreshold() {
+        return interactionThreshold;
+    }
     
     public List<Parameter<?>> getParameters() {
         return parameters;

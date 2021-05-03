@@ -2,17 +2,22 @@
     "logLevel": "FINEST",
     "evaluator": "dummy",
     "workerIp": "127.0.0.1",
+    "strategy": "PairWiseBooleanInteractionModel",
+    "interactionThreshold": 200,
     
     "parameters": [
         {
             "name": "param1",
-            "type": "int",
-            "default": 0,
-            "min": 0,
-            "max": 10
+            "type": "bool",
+            "default": false
         },
         {
-            "name": "otherParam",
+            "name": "param2",
+            "type": "bool",
+            "default": false
+        },
+        {
+            "name": "param3",
             "type": "bool",
             "default": false
         }

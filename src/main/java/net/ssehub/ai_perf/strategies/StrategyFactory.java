@@ -6,9 +6,56 @@ import net.ssehub.ai_perf.eval.AbstractEvaluator;
 import net.ssehub.ai_perf.model.Parameter;
 
 public class StrategyFactory {
-
-    public static IStrategy createStrategy(List<Parameter<?>> parameters, AbstractEvaluator evaluator) {
-        return new HillClimbing(parameters, evaluator);
+    
+    private String type;
+    
+    private List<Parameter<?>> parameters;
+    
+    private AbstractEvaluator evaluator;
+    
+    private long interactionThreshold;
+    
+    public void setEvaluator(AbstractEvaluator evaluator) {
+        this.evaluator = evaluator;
     }
     
+    public void setParameters(List<Parameter<?>> parameters) {
+        this.parameters = parameters;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    public void setInteractionThreshold(long interactionThreshold) {
+        this.interactionThreshold = interactionThreshold;
+    }
+    
+    public IStrategy create() throws IllegalStateException, IllegalArgumentException {
+        if (type == null) {
+            throw new IllegalStateException("No type specified");
+        }
+        if (parameters == null) {
+            throw new IllegalStateException("No parameters specified");
+        }
+        if (evaluator == null) {
+            throw new IllegalStateException("No evaluator specified");
+        }
+        
+        IStrategy result;
+        switch (type) {
+        case "HillClimbing":
+            result = new HillClimbing(parameters, evaluator);
+            break;
+            
+        case "PairWiseBooleanInteractionModel":
+            result = new PairWiseBooleanInteractionModel(parameters, evaluator, interactionThreshold);
+            break;
+        
+        default:
+            throw new IllegalArgumentException("Invalid evaluator type: " + type);
+        }
+        return result;
+    }
+
 }

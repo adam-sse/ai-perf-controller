@@ -1,0 +1,28 @@
+{
+    "logLevel": "FINEST",
+    "evaluator": "dummy",
+    "workerIp": "127.0.0.1",
+    "strategy": "HillClimbing",
+    
+    "parameters": [
+        {
+            "name": "param1",
+            "type": "int",
+            "default": 0,
+            "min": 0,
+            "max": 10
+        },
+        {
+            "name": "otherParam",
+            "type": "bool",
+            "default": false
+        },
+        {
+            "name": "realNumber",
+            "type": "double",
+            "default": -12.4,
+            "min": -20.0,
+            "max": -10.0
+        }
+    ]
+}

@@ -29,6 +29,11 @@ public abstract class Parameter<T> {
     public abstract Optional<ParameterValue<T>> getNeighbor(ParameterValue<T> value, Direction direction);
 
     @Override
+    public String toString() {
+        return name;
+    }
+    
+    @Override
     public int hashCode() {
         return Objects.hash(name);
     }
