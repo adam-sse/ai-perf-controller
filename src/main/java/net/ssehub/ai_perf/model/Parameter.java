@@ -1,5 +1,6 @@
 package net.ssehub.ai_perf.model;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import net.ssehub.ai_perf.model.ParameterValue.Direction;
@@ -26,5 +27,22 @@ public abstract class Parameter<T> {
     abstract <R> R accept(IParameterValueVisitor<R> visitor, ParameterValue<T> value);
     
     public abstract Optional<ParameterValue<T>> getNeighbor(ParameterValue<T> value, Direction direction);
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Parameter)) {
+            return false;
+        }
+        Parameter<?> other = (Parameter<?>) obj;
+        return Objects.equals(name, other.name);
+    }
     
 }

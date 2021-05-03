@@ -1,5 +1,6 @@
 package net.ssehub.ai_perf.model;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class ParameterValue<T> {
@@ -37,5 +38,23 @@ public class ParameterValue<T> {
     public String toString() {
         return parameter.getName() + "=" + value;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(parameter, value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ParameterValue)) {
+            return false;
+        }
+        ParameterValue<?> other = (ParameterValue<?>) obj;
+        return Objects.equals(parameter, other.parameter) && Objects.equals(value, other.value);
+    }
+    
 
 }
