@@ -1,5 +1,6 @@
 {
     "logLevel": "FINEST",
+    "evaluator": "network",
     "workerIp": "127.0.0.1",
     
     "parameters": [

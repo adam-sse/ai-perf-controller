@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.ssehub.ai_perf.eval.AbstractEvaluator;
+import net.ssehub.ai_perf.eval.EvaluationException;
 import net.ssehub.ai_perf.model.Parameter;
 import net.ssehub.ai_perf.model.ParameterValue;
 import net.ssehub.ai_perf.model.ParameterValue.Direction;
@@ -17,13 +19,13 @@ class HillClimbing implements IStrategy {
     
     private List<Parameter<?>> parameters;
     
-    private Evaluator evaluator;
+    private AbstractEvaluator evaluator;
     
     private MeasureResult currentTime;
     
     private List<ParameterValue<?>> currentValues;
     
-    public HillClimbing(List<Parameter<?>> parameters, Evaluator evaluator) {
+    public HillClimbing(List<Parameter<?>> parameters, AbstractEvaluator evaluator) {
         this.parameters = parameters;
         this.evaluator = evaluator;
     }

@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.ssehub.ai_perf.eval.AbstractEvaluator;
+import net.ssehub.ai_perf.eval.EvaluatorFactory;
 import net.ssehub.ai_perf.net.NetworkConnection;
-import net.ssehub.ai_perf.strategies.Evaluator;
 import net.ssehub.ai_perf.strategies.IStrategy;
 import net.ssehub.ai_perf.strategies.StrategyFactory;
 
@@ -34,19 +35,22 @@ public class Main {
         LoggingSetup.setLevel(config.getLogLevel());
         LOGGER.log(Level.CONFIG, "Log level set to " + config.getLogLevel());
         
-        try (NetworkConnection connection = new NetworkConnection(config.getWorkerIp())) {
-            
-            Evaluator evaluator = new Evaluator(connection);
-            
-            IStrategy strategy = StrategyFactory.createStrategy(config.getParameters(), evaluator);
-            strategy.run();
-            
-            evaluator.logStats();
-            
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Couldn't connect to worker", e);
-            return;
+        EvaluatorFactory evalFactory = new EvaluatorFactory();
+        evalFactory.setType(config.getEvaluator());
+        
+        if (evalFactory.needsNetwork()) {
+            try {
+                NetworkConnection connection = new NetworkConnection(config.getWorkerIp());
+                evalFactory.setConnection(connection);
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Couldn't connect to worker", e);
+            }
         }
+        
+        AbstractEvaluator evaluator = evalFactory.create();
+        IStrategy strategy = StrategyFactory.createStrategy(config.getParameters(), evaluator);
+        strategy.run();
+        evaluator.logStats();
     }
     
 }

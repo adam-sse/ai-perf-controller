@@ -1,4 +1,4 @@
-package net.ssehub.ai_perf.strategies;
+package net.ssehub.ai_perf.eval;
 
 
 public class EvaluationException extends Exception {

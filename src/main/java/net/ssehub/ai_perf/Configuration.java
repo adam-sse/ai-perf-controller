@@ -28,6 +28,9 @@ public class Configuration {
     private String logLevel = "INFO";
 
     @Required
+    private String evaluator;
+    
+    @Required
     private String workerIp;
     
     @Required
@@ -127,6 +130,10 @@ public class Configuration {
     
     public String getLogLevel() {
         return logLevel;
+    }
+    
+    public String getEvaluator() {
+        return evaluator;
     }
     
     public String getWorkerIp() {
