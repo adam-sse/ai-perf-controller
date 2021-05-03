@@ -47,10 +47,13 @@ public class Main {
             }
         }
         
-        AbstractEvaluator evaluator = evalFactory.create();
-        IStrategy strategy = StrategyFactory.createStrategy(config.getParameters(), evaluator);
-        strategy.run();
-        evaluator.logStats();
+        try (AbstractEvaluator evaluator = evalFactory.create()) {
+            IStrategy strategy = StrategyFactory.createStrategy(config.getParameters(), evaluator);
+            strategy.run();
+            evaluator.logStats();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Failed to close evaluator", e);
+        }
     }
     
 }
