@@ -14,6 +14,7 @@ import net.ssehub.ai_perf.eval.EvaluationException;
 import net.ssehub.ai_perf.model.BooleanParameter;
 import net.ssehub.ai_perf.model.Parameter;
 import net.ssehub.ai_perf.model.ParameterValue;
+import net.ssehub.ai_perf.net.MeasureResult;
 
 /**
  * Based on:
@@ -31,15 +32,13 @@ class PairWiseBooleanInteractionModel implements IStrategy {
     
     private AbstractEvaluator evaluator;
     
-    private long interactionThreshold;
-    
-    private long minBase;
+    private MeasureResult minBase;
     
     private Map<BooleanParameter, Long> individualEffect;
     
     private Map<Set<BooleanParameter>, Long> interactionEffects;
     
-    public PairWiseBooleanInteractionModel(List<Parameter<?>> parameters, AbstractEvaluator evaluator, long interactionThreshold)
+    public PairWiseBooleanInteractionModel(List<Parameter<?>> parameters, AbstractEvaluator evaluator)
             throws IllegalArgumentException {
         this.parameters = new ArrayList<>(parameters.size());
         for (Parameter<?> param : parameters) {
@@ -50,7 +49,6 @@ class PairWiseBooleanInteractionModel implements IStrategy {
         }
         
         this.evaluator = evaluator;
-        this.interactionThreshold = interactionThreshold;
     }
     
     @Override
@@ -59,12 +57,12 @@ class PairWiseBooleanInteractionModel implements IStrategy {
         interactionEffects = new HashMap<>(parameters.size());
         
         try {
-            minBase = evaluator.measure(buildParameterValuesWithOneEnabled(-1)).getTime();
+            minBase = evaluator.measure(buildParameterValuesWithOneEnabled(-1));
             
             for (int i = 0; i < parameters.size(); i++) {
-                long measure = evaluator.measure(buildParameterValuesWithOneEnabled(i)).getTime();
+                MeasureResult measure = evaluator.measure(buildParameterValuesWithOneEnabled(i));
                 
-                long effectOfParam = measure - minBase;
+                long effectOfParam = measure.getTime() - minBase.getTime();
                 
                 individualEffect.put(parameters.get(i), effectOfParam);
             }
@@ -72,13 +70,14 @@ class PairWiseBooleanInteractionModel implements IStrategy {
             LOGGER.log(Level.FINE, "Individual factors: {0}", individualEffect);
             
             Set<BooleanParameter> interactingParameters = new HashSet<>(parameters.size());
-            long maxBase = evaluator.measure(buildParameterValuesWithAllButOneEnabled(-1)).getTime();
+            MeasureResult maxBase = evaluator.measure(buildParameterValuesWithAllButOneEnabled(-1));
             for (int i = 0; i < parameters.size(); i++) {
-                long measure = evaluator.measure(buildParameterValuesWithAllButOneEnabled(i)).getTime();
+                MeasureResult measure = evaluator.measure(buildParameterValuesWithAllButOneEnabled(i));
                 
-                long effectOfParam = measure - maxBase;
+                long effectOfParam = measure.getTime() - maxBase.getTime();
+                long stdev = Math.min(measure.getStdev(), maxBase.getStdev());
                 
-                if (Math.abs(effectOfParam - individualEffect.get(parameters.get(i))) > interactionThreshold) {
+                if (Math.abs(effectOfParam - individualEffect.get(parameters.get(i))) > stdev) {
                     interactingParameters.add(parameters.get(i));
                 }
             }
@@ -90,13 +89,13 @@ class PairWiseBooleanInteractionModel implements IStrategy {
                         continue;
                     }
 
-                    long prediction = minBase + individualEffect.get(p1) + individualEffect.get(p2);
+                    long prediction = minBase.getTime() + individualEffect.get(p1) + individualEffect.get(p2);
                     
                     List<ParameterValue<?>> configuration = buildParameterValuesWithTwoEnabled(parameters.indexOf(p1), parameters.indexOf(p2));
-                    long actual = evaluator.measure(configuration).getTime();
+                    MeasureResult actual = evaluator.measure(configuration);
                     
-                    long interactionEffect = prediction - actual;
-                    if (Math.abs(interactionEffect) > interactionThreshold) {
+                    long interactionEffect = prediction - actual.getTime();
+                    if (Math.abs(interactionEffect) > actual.getStdev()) {
                         Set<BooleanParameter> set = new HashSet<>(2);
                         set.add(p1);
                         set.add(p2);
@@ -125,7 +124,7 @@ class PairWiseBooleanInteractionModel implements IStrategy {
     private String buildFormula() {
         StringBuilder sb = new StringBuilder();
         
-        sb.append(minBase);
+        sb.append(minBase.getTime());
         
         for (BooleanParameter param : parameters) {
             long effect = individualEffect.get(param);

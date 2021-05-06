@@ -36,8 +36,6 @@ public class Configuration {
     @Required
     private String strategy;
     
-    private long interactionThreshold;
-    
     @Required
     private List<Parameter<?>> parameters;
     
@@ -147,10 +145,6 @@ public class Configuration {
     
     public String getStrategy() {
         return strategy;
-    }
-    
-    public long getInteractionThreshold() {
-        return interactionThreshold;
     }
     
     public List<Parameter<?>> getParameters() {

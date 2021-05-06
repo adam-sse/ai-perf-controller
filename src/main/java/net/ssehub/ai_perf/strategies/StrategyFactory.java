@@ -13,8 +13,6 @@ public class StrategyFactory {
     
     private AbstractEvaluator evaluator;
     
-    private long interactionThreshold;
-    
     public void setEvaluator(AbstractEvaluator evaluator) {
         this.evaluator = evaluator;
     }
@@ -25,10 +23,6 @@ public class StrategyFactory {
     
     public void setType(String type) {
         this.type = type;
-    }
-    
-    public void setInteractionThreshold(long interactionThreshold) {
-        this.interactionThreshold = interactionThreshold;
     }
     
     public IStrategy create() throws IllegalStateException, IllegalArgumentException {
@@ -49,7 +43,7 @@ public class StrategyFactory {
             break;
             
         case "PairWiseBooleanInteractionModel":
-            result = new PairWiseBooleanInteractionModel(parameters, evaluator, interactionThreshold);
+            result = new PairWiseBooleanInteractionModel(parameters, evaluator);
             break;
         
         default:

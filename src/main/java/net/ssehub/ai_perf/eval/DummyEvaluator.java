@@ -13,7 +13,7 @@ public class DummyEvaluator extends AbstractEvaluator {
     
     @Override
     protected MeasureResult measureImpl(List<ParameterValue<?>> values) throws EvaluationException {
-        return new MeasureResult(random.nextInt(1000));
+        return new MeasureResult(random.nextInt(500) + 500, random.nextInt(50) + 50);
     }
 
     @Override

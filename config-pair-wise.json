@@ -1,0 +1,24 @@
+{
+    "logLevel": "FINEST",
+    "evaluator": "dummy",
+    "workerIp": "127.0.0.1",
+    "strategy": "PairWiseBooleanInteractionModel",
+    
+    "parameters": [
+        {
+            "name": "param1",
+            "type": "bool",
+            "default": false
+        },
+        {
+            "name": "param2",
+            "type": "bool",
+            "default": false
+        },
+        {
+            "name": "param3",
+            "type": "bool",
+            "default": false
+        }
+    ]
+}

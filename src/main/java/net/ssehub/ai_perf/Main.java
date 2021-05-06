@@ -54,7 +54,6 @@ public class Main {
             strategyFactory.setType(config.getStrategy());
             strategyFactory.setParameters(config.getParameters());
             strategyFactory.setEvaluator(evaluator);
-            strategyFactory.setInteractionThreshold(config.getInteractionThreshold());
             IStrategy strategy = strategyFactory.create();
             
             List<ParameterValue<?>> result = strategy.run();

@@ -7,21 +7,30 @@ public class MeasureResult {
     @Required
     private long time;
     
-    public MeasureResult(long time) {
+    @Required
+    private long stdev;
+    
+    public MeasureResult(long time, long stdev) {
         this.time = time;
+        this.stdev = stdev;
     }
     
     public long getTime() {
         return time;
     }
     
+    public long getStdev() {
+        return stdev;
+    }
+    
     public boolean isBetterThan(MeasureResult other) {
-        return this.time < other.time;
+        long stdev = Math.min(this.stdev, other.stdev);
+        return this.time < other.time - stdev; // at least one standard deviation better
     }
     
     @Override
     public String toString() {
-        return time + " ms";
+        return time + "±" + stdev + " ms";
     }
     
 }
