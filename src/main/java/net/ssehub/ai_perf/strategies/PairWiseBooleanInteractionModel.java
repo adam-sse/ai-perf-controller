@@ -85,13 +85,15 @@ class PairWiseBooleanInteractionModel implements IStrategy {
             
             for (BooleanParameter p1 : interactingParameters) {
                 for (BooleanParameter p2 : interactingParameters) {
-                    if (p1 == p2) {
+                    int p1i = parameters.indexOf(p1);
+                    int p2i = parameters.indexOf(p2);
+                    if (p2i <= p1i) {
                         continue;
                     }
 
                     long prediction = minBase.getTime() + individualEffect.get(p1) + individualEffect.get(p2);
                     
-                    List<ParameterValue<?>> configuration = buildParameterValuesWithTwoEnabled(parameters.indexOf(p1), parameters.indexOf(p2));
+                    List<ParameterValue<?>> configuration = buildParameterValuesWithTwoEnabled(p1i, p2i);
                     MeasureResult actual = evaluator.measure(configuration);
                     
                     long interactionEffect = prediction - actual.getTime();
