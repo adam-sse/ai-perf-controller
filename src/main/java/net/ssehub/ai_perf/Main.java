@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,8 +28,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
-        LoggingSetup.setupStdoutLogging();
-        LoggingSetup.setupFileLogging(getLogFile());
+        LoggingSetup.setup(true, Optional.of(getLogFile()));
         
         LOGGER.info("Starting controller");
         

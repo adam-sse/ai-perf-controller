@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.Optional;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -64,18 +65,44 @@ public class LoggingSetup {
         }
     }
     
-    /**
-     * Sets up the logging to log to a given log-file. If logging to file fails, {@link #setupStdoutLogging()} is used
-     * instead as a fallback.
-     * 
-     * @param logfile The file to log to.
-     */
-    public static final void setupFileLogging(File logfile) {
+    public static final void setup(boolean logToStdout, Optional<File> logFile) {
         removeDefaultLogging();
         
-        try {
-            FileHandler handler = new FileHandler(logfile.getPath(), true);
-            handler.setFormatter(new SingleLineLogFormatter());
+        if (logFile.isPresent()) {
+            try {
+                FileHandler handler = new FileHandler(logFile.get().getPath(), true);
+                handler.setFormatter(new SingleLineLogFormatter());
+                handler.setLevel(Level.ALL);
+                try {
+                    handler.setEncoding("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    // can't happen, ignore
+                }
+                
+                OUR_ROOT_LOGGER.addHandler(handler);
+                
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Failed to create log file", e);
+                logToStdout = true;
+            }
+        }
+        
+        if (logToStdout) {
+            StreamHandler handler = new StreamHandler(System.out, new SingleLineLogFormatter()) {
+                
+                @Override
+                public synchronized void publish(LogRecord record) {
+                    super.publish(record);
+                    flush();
+                }
+                
+                @Override
+                public synchronized void close() {
+                    // only flush, so we don't close System.out
+                    flush();
+                }
+                
+            };
             handler.setLevel(Level.ALL);
             try {
                 handler.setEncoding("UTF-8");
@@ -84,47 +111,9 @@ public class LoggingSetup {
             }
             
             OUR_ROOT_LOGGER.addHandler(handler);
-            OUR_ROOT_LOGGER.setLevel(level);
-            
-            Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionLogger());
-            
-        } catch (IOException e) {
-            setupStdoutLogging();
-            LOGGER.log(Level.SEVERE, "Failed to create log file, logging to console instead", e);
-        }
-    }
-    
-    /**
-     * Sets up the logging to log to standard output.
-     */
-    public static final void setupStdoutLogging() {
-        removeDefaultLogging();
-        
-        StreamHandler handler = new StreamHandler(System.out, new SingleLineLogFormatter()) {
-            
-            @Override
-            public synchronized void publish(LogRecord record) {
-                super.publish(record);
-                flush();
-            }
-            
-            @Override
-            public synchronized void close() {
-                // only flush, so we don't close System.out
-                flush();
-            }
-            
-        };
-        handler.setLevel(Level.ALL);
-        try {
-            handler.setEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // can't happen, ignore
         }
         
-        OUR_ROOT_LOGGER.addHandler(handler);
         OUR_ROOT_LOGGER.setLevel(level);
-        
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionLogger());
     }
     
