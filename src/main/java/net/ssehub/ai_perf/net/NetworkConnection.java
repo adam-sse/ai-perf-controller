@@ -55,6 +55,10 @@ public class NetworkConnection implements Closeable {
         LOGGER.info("Connected");
     }
     
+    public String getIp() {
+        return socket.getInetAddress().getHostAddress();
+    }
+    
     @Override
     public void close() throws IOException {
         this.socket.close();

@@ -1,9 +1,14 @@
 package net.ssehub.ai_perf.eval;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import net.ssehub.ai_perf.net.NetworkConnection;
 
 public class EvaluatorFactory {
 
+    private static final Logger LOGGER = Logger.getLogger(EvaluatorFactory.class.getName());
+    
     private String type;
     
     private NetworkConnection connection;
@@ -34,10 +39,12 @@ public class EvaluatorFactory {
             if (connection == null) {
                 throw new IllegalStateException("No network connection supplied");
             }
+            LOGGER.log(Level.CONFIG, "Using NetworkEvaluator with worker " + connection.getIp());
             result = new NetworkEvaluator(connection);
             break;
             
         case "dummy":
+            LOGGER.log(Level.CONFIG, "Using DummyEvaluator");
             result = new DummyEvaluator();
             break;
         

@@ -1,11 +1,15 @@
 package net.ssehub.ai_perf.strategies;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.ssehub.ai_perf.eval.AbstractEvaluator;
 import net.ssehub.ai_perf.model.Parameter;
 
 public class StrategyFactory {
+    
+    private static final Logger LOGGER = Logger.getLogger(StrategyFactory.class.getName());
     
     private String type;
     
@@ -35,6 +39,8 @@ public class StrategyFactory {
         if (evaluator == null) {
             throw new IllegalStateException("No evaluator specified");
         }
+        
+        LOGGER.log(Level.CONFIG, "Using strategy {0}", type);
         
         IStrategy result;
         switch (type) {
