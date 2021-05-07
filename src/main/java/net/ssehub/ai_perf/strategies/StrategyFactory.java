@@ -51,6 +51,10 @@ public class StrategyFactory {
         case "PairWiseBooleanInteractionModel":
             result = new PairWiseBooleanInteractionModel(parameters, evaluator);
             break;
+            
+        case "SingleEvaluation":
+            result = new SingleEvaluation(parameters, evaluator);
+            break;
         
         default:
             throw new IllegalArgumentException("Invalid evaluator type: " + type);
