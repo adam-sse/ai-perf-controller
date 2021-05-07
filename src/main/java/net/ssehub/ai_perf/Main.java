@@ -2,6 +2,8 @@ package net.ssehub.ai_perf;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +19,16 @@ public class Main {
 
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     
+    private static File getLogFile() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        
+        return new File ("controller_" + formatter.format(now) + ".log");
+    }
+    
     public static void main(String[] args) {
         LoggingSetup.setupStdoutLogging();
+        LoggingSetup.setupFileLogging(getLogFile());
         
         LOGGER.info("Starting controller");
         
