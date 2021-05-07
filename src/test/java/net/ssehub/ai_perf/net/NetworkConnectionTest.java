@@ -23,7 +23,7 @@ public class NetworkConnectionTest {
 
     @Test
     public void timeReadCorrectly() {
-        MockPeer mockPeer = new MockPeer("{\"time\": 123456}");
+        MockPeer mockPeer = new MockPeer("{\"time\": 123456, \"stdev\": 500}");
         
         NetworkConnection connection = assertDoesNotThrow(() -> new NetworkConnection("127.0.0.1"));
         
@@ -37,7 +37,7 @@ public class NetworkConnectionTest {
     
     @Test
     public void multipleTimesReadCorrectly() {
-        MockPeer mockPeer = new MockPeer("{\"time\": 123456}{\"time\": 634}");
+        MockPeer mockPeer = new MockPeer("{\"time\": 123456, \"stdev\": 500}{\"time\": 634, \"stdev\": 30}");
         
         NetworkConnection connection = assertDoesNotThrow(() -> new NetworkConnection("127.0.0.1"));
         
@@ -125,7 +125,7 @@ public class NetworkConnectionTest {
     
     @Test
     public void intParamSentCorrectly() {
-        MockPeer mockPeer = new MockPeer("{\"time\": 123456}\n");
+        MockPeer mockPeer = new MockPeer("{\"time\": 123456, \"stdev\": 500}\n");
         
         NetworkConnection connection = assertDoesNotThrow(() -> new NetworkConnection("127.0.0.1"));
         
@@ -142,7 +142,7 @@ public class NetworkConnectionTest {
     
     @Test
     public void booleanParamSentCorrectly() {
-        MockPeer mockPeer = new MockPeer("{\"time\": 123456}\n");
+        MockPeer mockPeer = new MockPeer("{\"time\": 123456, \"stdev\": 500}\n");
         
         NetworkConnection connection = assertDoesNotThrow(() -> new NetworkConnection("127.0.0.1"));
         
@@ -159,7 +159,7 @@ public class NetworkConnectionTest {
     
     @Test
     public void doubleParamSentCorrectly() {
-        MockPeer mockPeer = new MockPeer("{\"time\": 123456}\n");
+        MockPeer mockPeer = new MockPeer("{\"time\": 123456, \"stdev\": 500}\n");
         
         NetworkConnection connection = assertDoesNotThrow(() -> new NetworkConnection("127.0.0.1"));
         
@@ -176,7 +176,7 @@ public class NetworkConnectionTest {
     
     @Test
     public void multipleParamSentCorrectly() {
-        MockPeer mockPeer = new MockPeer("{\"time\": 123456}\n");
+        MockPeer mockPeer = new MockPeer("{\"time\": 123456, \"stdev\": 500}\n");
         
         NetworkConnection connection = assertDoesNotThrow(() -> new NetworkConnection("127.0.0.1"));
         
