@@ -1,76 +1,76 @@
 [
     {
-        "name": "tf.config.optimizer.set_experimental_options.layout_optimizer",
+        "name": "optimizer.experimental.layout_optimizer",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.constant_folding",
+        "name": "optimizer.experimental.constant_folding",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.shape_optimization",
+        "name": "optimizer.experimental.shape_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.remapping",
+        "name": "optimizer.experimental.remapping",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.arithmetic_optimization",
+        "name": "optimizer.experimental.arithmetic_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.dependency_optimization",
+        "name": "optimizer.experimental.dependency_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.loop_optimization",
+        "name": "optimizer.experimental.loop_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.function_optimization",
+        "name": "optimizer.experimental.function_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.debug_stripper",
+        "name": "optimizer.experimental.debug_stripper",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.disable_model_pruning",
+        "name": "optimizer.experimental.disable_model_pruning",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.scoped_allocator_optimization",
+        "name": "optimizer.experimental.scoped_allocator_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.pin_to_host_optimization",
+        "name": "optimizer.experimental.pin_to_host_optimization",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.implementation_selector",
+        "name": "optimizer.experimental.implementation_selector",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.auto_mixed_precision",
+        "name": "optimizer.experimental.auto_mixed_precision",
         "type": "bool",
         "default": false
     },
     {
-        "name": "tf.config.optimizer.set_experimental_options.disable_meta_optimizer",
+        "name": "optimizer.experimental.disable_meta_optimizer",
         "type": "bool",
         "default": false
     }

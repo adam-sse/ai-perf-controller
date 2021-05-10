@@ -1,0 +1,22 @@
+[
+    {
+        "name": "run_functions_eagerly",
+        "type": "bool",
+        "default": false
+    },
+    {
+        "name": "optimizer.jit",
+        "type": "bool",
+        "default": false
+    },
+    {
+        "name": "experimental.tensor_float_32_execution",
+        "type": "bool",
+        "default": false
+    },
+    {
+        "name": "experimental.cpu.memory_growth",
+        "type": "bool",
+        "default": false
+    }
+]

@@ -1,13 +1,13 @@
 [
     {
-        "name": "tf.config.threading.inter_op_parallelism",
+        "name": "threading.inter_op_parallelism",
         "type": "int",
         "default": 1,
         "min": 1,
         "max": 128
     },
     {
-        "name": "tf.config.threading.intra_op_parallelism",
+        "name": "threading.intra_op_parallelism",
         "type": "int",
         "default": 1,
         "min": 1,
