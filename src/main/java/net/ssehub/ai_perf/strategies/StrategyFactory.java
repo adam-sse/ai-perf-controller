@@ -55,6 +55,10 @@ public class StrategyFactory {
         case "SingleEvaluation":
             result = new SingleEvaluation(parameters, evaluator);
             break;
+            
+        case "IntervalEvaluation":
+            result = new IntervalEvaluation(parameters, evaluator);
+            break;
         
         default:
             throw new IllegalArgumentException("Invalid evaluator type: " + type);
