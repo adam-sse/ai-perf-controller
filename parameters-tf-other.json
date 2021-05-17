@@ -15,7 +15,7 @@
         "default": false
     },
     {
-        "name": "experimental.cpu.memory_growth",
+        "name": "experimental.gpu.memory_growth",
         "type": "bool",
         "default": false
     }
