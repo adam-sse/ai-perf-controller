@@ -1,6 +1,5 @@
 package net.ssehub.ai_perf.eval;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -16,8 +15,4 @@ public class DummyEvaluator extends AbstractEvaluator {
         return new MeasureResult(random.nextInt(500) + 500, random.nextInt(50) + 50);
     }
 
-    @Override
-    public void close() throws IOException {
-    }
-    
 }

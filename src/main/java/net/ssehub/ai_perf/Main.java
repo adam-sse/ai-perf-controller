@@ -19,16 +19,22 @@ import net.ssehub.ai_perf.strategies.StrategyFactory;
 public class Main {
 
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
+    private static final String START_TIME_STRING;
     
-    private static File getLogFile() {
+    private static final LocalDateTime START_TIME = LocalDateTime.now();
+    
+    static {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        LocalDateTime now = LocalDateTime.now();
-        
-        return new File ("controller_" + formatter.format(now) + ".log");
+        START_TIME_STRING = formatter.format(START_TIME);
+    }
+    
+    public static String getStartTimeStamp() {
+        return START_TIME_STRING;
     }
     
     public static void main(String[] args) {
-        LoggingSetup.setup(true, Optional.of(getLogFile()));
+        LoggingSetup.setup(true, Optional.of(new File ("controller_" + getStartTimeStamp() + ".log")));
         
         LOGGER.info("Starting controller");
         
@@ -49,6 +55,7 @@ public class Main {
         
         EvaluatorFactory evalFactory = new EvaluatorFactory();
         evalFactory.setType(config.getEvaluator());
+        evalFactory.setResultLogFile(new File("controller_" + getStartTimeStamp() + ".csv"));
         
         if (evalFactory.needsNetwork()) {
             try {

@@ -1,5 +1,7 @@
 package net.ssehub.ai_perf.eval;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,12 +15,18 @@ public class EvaluatorFactory {
     
     private NetworkConnection connection;
     
+    private File resultLogFile;
+    
     public void setType(String type) {
         this.type = type;
     }
     
     public void setConnection(NetworkConnection connection) {
         this.connection = connection;
+    }
+    
+    public void setResultLogFile(File resultLogFile) {
+        this.resultLogFile = resultLogFile;
     }
     
     public boolean needsNetwork() throws IllegalStateException {
@@ -50,6 +58,15 @@ public class EvaluatorFactory {
         
         default:
             throw new IllegalArgumentException("Invalid evaluator type: " + type);
+        }
+        
+        if (resultLogFile != null) {
+            try {
+                result.setResultLogFile(resultLogFile);
+                LOGGER.log(Level.CONFIG, "Logging evaluator results to {0}", resultLogFile);
+            } catch (IOException e) {
+                LOGGER.log(Level.WARNING, "Failed to create result log file for evaluator", e);
+            }
         }
         
         return result;

@@ -30,6 +30,7 @@ class NetworkEvaluator extends AbstractEvaluator {
     
     @Override
     public void close() throws IOException {
+        super.close();
         connection.close();
     }
     

@@ -1,5 +1,6 @@
 /target/
 
 config.json
-*.log
-*.log.lck
+controller_*.log
+controller_*.log.lck
+controller_*.csv
