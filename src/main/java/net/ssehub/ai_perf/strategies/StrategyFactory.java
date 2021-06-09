@@ -60,6 +60,10 @@ public class StrategyFactory {
             result = new IntervalEvaluation(parameters, evaluator);
             break;
         
+        case "FullEvaluation":
+            result = new FullEvaluation(parameters, evaluator);
+            break;
+            
         default:
             throw new IllegalArgumentException("Invalid evaluator type: " + type);
         }
