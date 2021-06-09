@@ -51,7 +51,15 @@ public abstract class AbstractEvaluator implements Closeable {
                 resultLogFile.write(';');
             }
             
-            resultLogFile.write("time;stdev\n");
+            resultLogFile.write("time;stdev");
+            List<Long> measures = result.getMeasures();
+            if (measures != null) {
+                for (int i = 1; i <= measures.size(); i++) {
+                    resultLogFile.write(";measure ");
+                    resultLogFile.write(Integer.toString(i));
+                }
+            }
+            resultLogFile.write('\n');
             
             first = false;
         }
@@ -63,6 +71,15 @@ public abstract class AbstractEvaluator implements Closeable {
         resultLogFile.write(Long.toString(result.getTime()));
         resultLogFile.write(';');
         resultLogFile.write(Long.toString(result.getStdev()));
+        
+        List<Long> measures = result.getMeasures();
+        if (measures != null) {
+            for (Long measure : measures) {
+                resultLogFile.write(';');
+                resultLogFile.write(Long.toString(measure));
+            }
+        }
+        
         resultLogFile.write('\n');
         resultLogFile.flush();
     }
