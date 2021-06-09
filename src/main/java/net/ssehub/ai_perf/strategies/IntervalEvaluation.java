@@ -15,9 +15,14 @@ public class IntervalEvaluation implements IStrategy {
     
     private static final Logger LOGGER = Logger.getLogger(IntervalEvaluation.class.getName());
     
-    private static final int INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+    private static final int INTERVAL_MS;
     
-    private static final int NUM_MEASERS = 24 * 12; // 24 hours @ 5 minutes
+    private static final int NUM_MEASERS;
+    
+    static {
+        INTERVAL_MS = Integer.parseInt(System.getProperty("evaluation.sleepInterval", 5 * 60 * 1000 + ""));
+        NUM_MEASERS = Integer.parseInt(System.getProperty("evaluation.numMeasures", 24 * 12 + ""));
+    }
 
     private List<Parameter<?>> parameters;
     
